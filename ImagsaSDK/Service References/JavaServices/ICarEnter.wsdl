@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webservice.hypertech.com/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ICarEnter" targetNamespace="http://webservice.hypertech.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webservice.hypertech.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getVehicleNo" type="tns:getVehicleNo" />
+      <xs:element name="getVehicleNoResponse" type="tns:getVehicleNoResponse" />
+      <xs:element name="outStatus" type="tns:outStatus" />
+      <xs:element name="outStatusResponse" type="tns:outStatusResponse" />
+      <xs:element name="start" type="tns:start" />
+      <xs:element name="startResponse" type="tns:startResponse" />
+      <xs:complexType name="outStatus">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="outStatusResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getVehicleNo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getVehicleNoResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="start">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="startResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Exception" type="tns:Exception" />
+      <xs:complexType name="Exception">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="Exception">
+    <wsdl:part name="Exception" element="tns:Exception" />
+  </wsdl:message>
+  <wsdl:message name="getVehicleNoResponse">
+    <wsdl:part name="parameters" element="tns:getVehicleNoResponse" />
+  </wsdl:message>
+  <wsdl:message name="start">
+    <wsdl:part name="parameters" element="tns:start" />
+  </wsdl:message>
+  <wsdl:message name="outStatusResponse">
+    <wsdl:part name="parameters" element="tns:outStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="getVehicleNo">
+    <wsdl:part name="parameters" element="tns:getVehicleNo" />
+  </wsdl:message>
+  <wsdl:message name="startResponse">
+    <wsdl:part name="parameters" element="tns:startResponse" />
+  </wsdl:message>
+  <wsdl:message name="outStatus">
+    <wsdl:part name="parameters" element="tns:outStatus" />
+  </wsdl:message>
+  <wsdl:portType name="ICarEnter">
+    <wsdl:operation name="outStatus">
+      <wsdl:input name="outStatus" message="tns:outStatus" />
+      <wsdl:output name="outStatusResponse" message="tns:outStatusResponse" />
+      <wsdl:fault name="Exception" message="tns:Exception" />
+    </wsdl:operation>
+    <wsdl:operation name="getVehicleNo">
+      <wsdl:input name="getVehicleNo" message="tns:getVehicleNo" />
+      <wsdl:output name="getVehicleNoResponse" message="tns:getVehicleNoResponse" />
+      <wsdl:fault name="Exception" message="tns:Exception" />
+    </wsdl:operation>
+    <wsdl:operation name="start">
+      <wsdl:input name="start" message="tns:start" />
+      <wsdl:output name="startResponse" message="tns:startResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ICarEnterSoapBinding" type="tns:ICarEnter">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="outStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="outStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="outStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault use="literal" name="Exception" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getVehicleNo">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getVehicleNo">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getVehicleNoResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault use="literal" name="Exception" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="start">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="start">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="startResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ICarEnter">
+    <wsdl:port name="CarEnterPort" binding="tns:ICarEnterSoapBinding">
+      <soap:address location="http://192.168.1.201:8090/avc_macau/webservices/CarEnter/start" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

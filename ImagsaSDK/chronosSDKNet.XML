@@ -1,0 +1,2588 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>chronosSDKNet</name>
+    </assembly>
+    <members>
+        <member name="T:Imagsa.Chronos.ChronosSDK">
+            <summary>
+            Class used to connect and work with Chronos' Server.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.ChronosSDK.CAMSTATUS_SOMETHING_WRONG">
+            Something at the remote camera is not OK.
+        </member>
+        <member name="F:Imagsa.Chronos.ChronosSDK.CAMSTATUS_ALL_OK">
+            Everything at the remote camera is OK.
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.#ctor">
+            <summary>
+            Default constructor. Initializes the main variables and objects.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.Dispose">
+            <summary>
+            Frees all the objects.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.Connect(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Connects to the specified server.
+            </summary>
+            <param name="hostname">Hostname or address of the remote server.</param>
+            <param name="port">TCP/IP port to use.</param>
+            <param name="ssl">Flag that indicates if a secure connection will be used.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.IncorrectProductException"></exception>
+            <exception cref="T:Imagsa.Chronos.IncorrectVersionException"></exception>
+            <exception cref="T:Imagsa.Chronos.SimulationProductException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConnectionErrorException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.Close">
+            <summary>
+            Closes the active connection to the remote server. 
+            </summary>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.ClosingErrorException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.RebootRemoteHost">
+            <summary>
+            Reboots remote server computer. Take into account that once this function is executed, all processes
+            and applications at the remote server will be closed (also the connection with the remote server). Please, use it only in case one of the SDK functions 
+            requires a system reboot in order to apply changes.
+            </summary>
+            <returns> Result code of the function. If SUCCESS, it means the reboot request has reached the remote server.</returns> 
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.Login(System.String)">
+            <summary>
+            Allows the user to elevate the session as an user or as an administrator 
+            in order to get access to the data or configure the remote system.
+            </summary>
+            <param name="userPassword">A string containing the password.</param>
+            <returns>A Elevation enum value that represents the obtained elevation.</returns>
+            <remarks>There are two passwords:
+                  - \a user - If the password is activated, each session requires user login in
+                              order to get events, images, and access to the whole remote data.
+                              If the password is not activated (empty password), each session
+                              does not require user login.
+                  - \a admin - If the password is activated, allows the session to use
+                              administrative functions such as camera configuration or resetting.
+            Take into account that an empty passwords mean free privileges. By default no
+            password is required for access as an administrator. Thus, it is recommended to set
+            an admin password and a user password in the first system setup. Please take a look
+            to SetUserPassword() and SetAdminPassword() functions in order to configure both
+            user and admin passwords.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.Incognito">
+            <summary>
+            Tries to enter in the incognito mode.
+            </summary>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetUserPassword(System.String)">
+            <summary>
+            Sets the user password for future sessions. Use an empty string to
+            deactivate the password.
+            </summary>
+            <param name="userPassword">The new user password.</param>
+            <remarks>There are two passwords:
+                  - \a user - If the password is activated, each session requires user login in
+                              order to get events, images, and access to the whole remote data.
+                              If the password is not activated (empty password), each session
+                              does not require user login.
+                  - \a admin - If the password is activated, allows the session to use
+                              administrative functions such as camera configuration or resetting.
+            Take into account that an empty passwords mean free privileges. By default no
+            password is required for access as an administrator. Thus, it is recommended to set
+            an admin password and a user password in the first system setup. Please take a look
+            to SetUserPassword() and SetAdminPassword() functions in order to configure both
+            user and admin passwords.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetAdminPassword(System.String)">
+            <summary>
+            Sets the admin password for future sessions. Use an empty string to
+            deactivate the password.
+            </summary>
+            <param name="adminPassword">The new admin password.</param>
+            <remarks>There are two passwords:
+                  - \a user - If the password is activated, each session requires user login in
+                              order to get events, images, and access to the whole remote data.
+                              If the password is not activated (empty password), each session
+                              does not require user login.
+                  - \a admin - If the password is activated, allows the session to use
+                              administrative functions such as camera configuration or resetting.
+            Take into account that an empty passwords mean free privileges. By default no
+            password is required for access as an administrator. Thus, it is recommended to set
+            an admin password and a user password in the first system setup. Please take a look
+            to SetUserPassword() and SetAdminPassword() functions in order to configure both
+            user and admin passwords.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetCameraStatus">
+            <summary>
+            Retrieves the full list of status of the local camera used by the remote server.
+            </summary>
+            <returns>A vector containing a list with the status flags. The first flag is always 
+            imagsa::chronos::CAMSTATUS_ALL_OK, or  imagsa::chronos::CAMSTATUS_SOMETHING_WRONG. Refer to grpCameraStatus "camera status" for status' flags details.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetRemoteServerVersion">
+            <summary>
+            Retrieves the version number of the chronosServer running at the remote computer.
+            </summary>
+            <returns>String containing the number of the version.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetNearestEvent(System.DateTime)">
+            <summary>
+            Retrieves the event identifier of the event nearest in time compared to a
+            given DateTime.
+            </summary>
+            <param name="dateTime">A DateTime object.</param>
+            <returns>Identification number of the event.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetLatest">
+            <summary>
+            Retrieves the identification number of the latest generated event.
+            </summary>
+            <returns>Identification number of the latest generated event.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetBMP(System.Int32)">
+            <summary>
+            Retrieves the whole bitmap given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetNumOverviews(System.Int32)">
+            <summary>
+            Retrieves the number of overviews at a given event.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>The number of overviews at the event.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetOverview(System.Int32,System.Int32@,System.Int32@,System.Int32,System.Int32)">
+            <summary>
+            Retrieves the overview image given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <param name="overviewID">Indicates the index of the requested overview (from 0 to number of overviews). By default, the value is -1, which is indicating that
+            						the requested overview will be the closest one (in time) to the detection used to read the vehicle license plate.</param>
+            <param name="compressionLevel">Value that ranges from -1 to 100. It specifies the compression level applied to the overview image. 
+            			If the value is -1 (default value), it means the user is requesting the overview with the same compression and format (JPEG or BMP) that it is configured at the camera.
+            			With other values (0-100), the returned image is compressed to jpg.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+             <example>  
+            Example:.
+            <code> 
+            int eventID = 23;
+            int width = 0;
+            int height = 0;
+            int overviewID = 1;
+            int compressionLevel = 25;
+            byte[] overviewData = chronosSDK.GetOverview(eventID, ref width, ref height, overviewID, compressionLevel);
+            </code> 
+            </example> 
+            
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetColorOverview(System.Int32)">
+            <summary>
+            Retrieves the list of color overview images given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list of ColorOverview objects representing the color overview images.</returns>
+            <remarks>Each event may contain color overview images depending of the remote configuration
+            of the server and the remote color camera. If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetColorNumImages(System.Int32)">
+            <summary>
+            Retrieves the number of color images stored by the ColorVideo plugin at a given event.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>The number of color images. If numImages is 0, it means there are no requested images stored at the event.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetColorImages(System.Int32)">
+             <summary>
+            Retrieves the list of color overview images saved by the ColorVideo plugin given an event identification number.
+             </summary>
+             <param name="eventId">Identification number of the event.</param>
+             <returns>A list of ColorOverview objects representing the color overview images.</returns>
+             <remarks>Each event may contain color overview images depending of the remote configuration
+             of the server and the remote color camera. If success, data of all the images must be
+             deleted in order to free the memory.</remarks>
+             <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+             <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+             <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+             <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetColorVideo(System.Int32)">
+            <summary>
+            Retrieves a list with a single ColorOverview object that contains the compressed color video 
+            saved by the ColorVideo plugin given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list with a single ColorOverview object representing the color overview video.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetColorReferenceImage(System.Int32)">
+            <summary>
+            Retrieves a list with the reference color overview image (the one synchronized with the detection of the main Atalaia camera) that has been saved by the ColorVideo plugin.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list with a ColorOverview object representing the color overview reference image.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetColorImage(System.Int32,System.Int32)">
+            <summary>
+            Retrieves a list with the requested color image saved by the ColorVideo plugin.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="imageIndex">imageIndex	Identification number of the image within the list of images (0-...)</param>
+            <returns>A list with a ColorOverview object representing the color overview.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetRedLightVideo(System.Int32)">
+            <summary>
+            Retrieves a list with a single color overview that contains the compressed color video saved by the RedLight plugin at a given event.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list with a ColorOverview object representing the color overview video.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetVehicleTrackerVideo(System.Int32)">
+            <summary>
+            Retrieves a list with a single color overview that contains the compressed color video saved by the VehicleTracker plugin at a given event.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list with a ColorOverview object representing the color overview video.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamNumCameras(System.Int32)">
+            <summary>
+            Retrieves the number of color cameras used by the MultipleCameraView plugin that have stored data into a given event.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>The number of used color cameras.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamNumImagesAtCamera(System.Int32,System.Int32)">
+            <summary>
+            Retrieves the number of color images stored by the MultipleCameraView plugin at a given camara from a given event.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="cameraIndex">Identification number of the camera.</param>
+            <returns>The number of used color cameras.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamImageAtCamera(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Retrieves a list with the requested color image for a given cameraIndex. The function retrieves the only the data that has been injected by the MultipleCameraView plugin.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="cameraIndex">Identification number of the camera.</param>
+            <param name="imageIndex">imageIndex	Identification number of the image within the list of images (0-...)</param>
+            <returns>A list with a ColorOverview object representing the color overview.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamReferenceImageAtCamera(System.Int32,System.Int32)">
+            <summary>
+            Retrieves a list with the reference color image (the one synchronized with the main camera detection) for a given cameraIndex. The function retrieves the only the data that has been injected by the MultipleCameraView plugin.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="cameraIndex">Identification number of the camera.</param>
+            <returns>A list with a ColorOverview object representing the color overview.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamVideoAtCamera(System.Int32,System.Int32)">
+            <summary>
+            Retrieves a list with the requested color overview video for a given cameraIndex. The function retrieves the only the data that has been injected by the MultipleCameraView plugin.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="cameraIndex">Identification number of the camera.</param>
+            <returns>A list with a ColorOverview object representing the color overview video.</returns>
+            <remarks> If success, data of all the images must be
+            deleted in order to free the memory.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamImagesAtCamera(System.Int32,System.Int32)">
+             <summary>
+            Retrieves a list with all the color images of a given cameraIndex. The function retrieves the only the data that has been injected by the MultipleCameraView plugin.
+             </summary>
+             <param name="eventId">Identification number of the event.</param>
+             <param name="cameraIndex">Identification number of the camera.</param>
+             <returns>A list of ColorOverview objects representing the color overview images.</returns>
+             <remarks>Each event may contain color overview images depending of the remote configuration
+             of the server and the remote color camera. If success, data of all the images must be
+             deleted in order to free the memory.</remarks>
+             <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+             <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+             <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+             <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamReferenceImagesAtAllCameras(System.Int32)">
+             <summary>
+            Retrieves a list that contains, for every camera, a list with the reference color overview image of the camera. The function retrieves the only the data that has been injected by the MultipleCameraView plugin. 
+             The reference image stands for the image that is synchronized with the detection from the main Atalaia Camera.
+             </summary>
+             <param name="eventId">Identification number of the event.</param>
+             <returns>A list of lists with the reference color overview images. Each position of the main list has the data of a single camera.</returns>
+             <remarks>Each event may contain color overview images depending of the remote configuration
+             of the server and the remote color camera. If success, data of all the images must be
+             deleted in order to free the memory.</remarks>
+             <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+             <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+             <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+             <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamAllImagesAtAllCameras(System.Int32)">
+             <summary>
+            Retrieves a list that contains, for every camera, a list with all the color overview images of the camera.
+             </summary>
+             <param name="eventId">Identification number of the event.</param>
+             <returns>A list o lists with all the color overview images. Each position of the main list has the data of a single camera..</returns>
+             <remarks>Each event may contain color overview images depending of the remote configuration
+             of the server and the remote color camera. If success, data of all the images must be
+             deleted in order to free the memory.</remarks>
+             <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+             <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+             <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+             <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMultiCamVideoAtAllCameras(System.Int32)">
+             <summary>
+            Retrieves a list that contains, for every camera, a list with the color overview video of the camera. The function retrieves the only the data that has been injected by the MultipleCameraView plugin.
+             </summary>
+             <param name="eventId">Identification number of the event.</param>
+             <returns>A list o lists with all the color overview videos. Each position of the main list has the data of a single camera.</returns>
+             <remarks>Each event may contain color overview images depending of the remote configuration
+             of the server and the remote color camera. If success, data of all the images must be
+             deleted in order to free the memory.</remarks>
+             <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+             <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+             <exception cref="M:Imagsa.Chronos.NotColorPluginDataException.#ctor"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+             <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+             <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+             <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetBestPlate(System.Int32,System.Int32@,System.Int32@,System.Int32)">
+            <summary>
+            Retrieves the best scored plate image given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <param name="compressionLevel">	Value that ranges from -1 to 100. It specifies the compression level applied to the ROI image. 
+            			If the value is -1 (default value), it means the user is requesting the ROI with BMP format.
+            			With other values (0-100), the returned image is compressed to jpg.</param>
+            <returns>Raw data of the image stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetBestPlate(System.Int32,System.Int32@,System.Int32@,System.Double@,System.Double@,System.Int32)">
+            <summary>
+            Retrieves the best scored plate image given an event identification number. Timestamp data is also included.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <param name="timestamp_cpu"> Timestamp value of the detection using the CPU clock where the detection has been generated. This timestamp is the one used to synchronize with the color camera/s. </param>
+            <param name="timestamp_gps"> Timestamp value of the detection using the GPS clock connected to the camera.</param>
+            <param name="compressionLevel">	Value that ranges from -1 to 100. It specifies the compression level applied to the ROI image. 
+            			If the value is -1 (default value), it means the user is requesting the ROI with BMP format.
+            			With other values (0-100), the returned image is compressed to jpg.</param>
+            <returns>Raw data of the image stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetROI(System.Int32,System.Int32,System.Int32@,System.Int32@,System.Int32)">
+            <summary>
+            Retrieves the plate image identified by a ROI index given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="roiId">Identification number of the ROI.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <param name="compressionLevel">	Value that ranges from -1 to 100. It specifies the compression level applied to the ROI image. 
+            			If the value is -1 (default value), it means the user is requesting the ROI with BMP format.
+            			With other values (0-100), the returned image is compressed to jpg.</param>
+            <returns>Raw data of the image stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetROI(System.Int32,System.Int32,System.Int32@,System.Int32@,System.Double@,System.Double@,System.Int32)">
+            <summary>
+            Retrieves the plate image identified by a ROI index given an event identification number. Timestamp data is also included.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="roiId">Identification number of the ROI.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <param name="timestamp_cpu"> Timestamp value of the detection using the CPU clock where the detection has been generated. This timestamp is the one used to synchronize with the color camera/s. </param>
+            <param name="timestamp_gps"> Timestamp value of the detection using the GPS clock connected to the camera.</param>
+            <param name="compressionLevel">	Value that ranges from -1 to 100. It specifies the compression level applied to the ROI image. 
+            			If the value is -1 (default value), it means the user is requesting the ROI with BMP format.
+            			With other values (0-100), the returned image is compressed to jpg.</param>
+            <returns>Raw data of the image stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetBestPlatesIndexes(System.Int32,System.Collections.Generic.List{System.Int32}@,System.Collections.Generic.List{System.Int32}@)">
+            <summary>
+            Retrieves two lists of ROI indexes that are considered as best plates or similar to the best plate given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="bestPlatesIndexes">List of ROIS indexes that have been read by OCR plugin</param>
+            <param name="similarPlatesIndexes">List of ROIS that have been tagged as plates similar to the best ROI cause they belong to the same group than the best plate.</param>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.RemoveBMP(System.Int32)">
+            <summary>
+            Removes the BMP file from the remote machine.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetProductInfo">
+            <summary>
+            Retrieves information about the server process in the remote machine,
+            such as the full product name, product version and build date and time.
+            </summary>
+            <returns>A string that will contain the product information</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetFreeDiskSpace">
+            <summary>
+            Retrieves the free space in the this where the data is stored.
+            </summary>
+            <returns>The total number of free bytes in the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.FreeSpaceException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.HardReset">
+            <summary>
+            Resets the remote server by removing all the events, lists, configuration files,
+            and any other possible stuff.
+            </summary>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetEvent(System.Int32)">
+            <summary>
+            Retrieves the event information given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A reference of an Event object.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetEvents(System.Int32,System.Int32)">
+            <summary>
+            Retrieves a list of events given a range of event identifiers.
+            </summary>
+            <param name="eventIdFrom">Event identification number to start from.</param>
+            <param name="eventIdTo">Final event identification number.</param>
+            <returns>A list of Event objects.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetEventsFromPlate(System.String,System.Int32,System.Int32)">
+            <summary>
+            Retrieves a list of events generated by an specified vehicle using its recognized license plate.
+            </summary>
+            <param name="plate">A string containing the license plate that must be used to search events.</param>
+            <param name="eventIdFrom">Event identification number to start from.</param>
+            <param name="eventIdTo">Final event identification number.</param>
+            <returns>A list of Event objects.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetEventsByDate(System.String,System.String)">
+            <summary>
+            Retrieves a list of events given a range of event datetime. The datetime must be given with the following format: "YYYY/MM/DD_HH:MM:SS.mmm"
+            </summary>
+            <param name="dateTimeStart">Event datetime to start from.</param>
+            <param name="dateTimeEnd">Final datetime.</param>
+            <returns>A list of Event objects.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetEventsByDateFromPlate(System.String,System.String,System.String)">
+            <summary>
+            Retrieves a list of events given a range of event datetime generated by an specified vehicle using its recognized license plate. The datetime must be given with the following format: "YYYY/MM/DD_HH:MM:SS.mmm"
+            </summary>
+            <param name="plate">A string containing the license plate that must be used to search events.</param>
+            <param name="dateTimeStart">Event identification number to start from.</param>
+            <param name="dateTimeEnd">Final event identification number.</param>
+            <returns>A list of Event objects.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetConfigFile">
+            <summary>
+            Obtains the device configuration file.
+            </summary>
+            <returns>Retrieved content of the device configuration file.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetConfigFile(System.String)">
+            <summary>
+            Writes the device configuration file and apply the changes.
+            </summary>
+            <remarks>
+            This function will override the contents of the remote file user.ini which is
+            mainly used to configure parameters of the capture device. By modifying this
+            file, the user is responsible for any malfunction of the camera. Please contact
+            your distributor to learn how you must modify this configuration file.
+            </remarks>
+            <param name="configFile">Content of the device configuration file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.RebootAtalayaException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetConfigBackup">
+            <summary>
+            Obtains a single file which contains the backup of all the configuration files from the camera.
+            With current SDK version, the backup includes the following files: atalaia.ini user.ini,  atalaiaServer.ini, calib.c3d, 
+            exposureTimeOverride.txt, chronos.ini, OCR.ini, VehicleClassification.ini, redLight.ini, tls.tls,
+            colorVideo.ini, multipleCameraView.ini, ftpClient.ini, vehicleTracker.ini, speed.ini.  
+            Also, if any of the color plugins 
+            (colorVideo, redlight, vehicleTracker or multipleCameraView) is used at the remote camera, the whole set of configuration
+            parameters from the AXIS camera is also incldued at the backup. In case the Axis configuration has to be included at the backup,
+            take into account that the function can take up to 10 seconds to recover the whole list of Axis parameters.
+            No BMP or png masks files are backed up. The backup only includes the files from the main CPU.
+            </summary>
+            <returns>Retrieved content of the configuration files backup.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAccesToAxisException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnableToGetAxisConfigException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetConfigBackup(System.String)">
+            <summary>
+            Writes the given configuration backup and apply the changes. In the case the 
+            function returns CANNOT_REBOOT_ATALAYA_SERVER or CANNOT_RESTART_PROCESSOR, take into account 
+            that the files have been successfully sent but there has been an error when trying to reboot
+            any required software to apply the changes. If the destination directory does not exists, this
+            function will not create it and consequently the configuration file will not be successfuly saved.    
+            If the configuration backup contains the AXIS configuration, this function can take up to one minute
+            to send the whole list of parameters.
+            Since some files possibly belong to a protected disk, it is required to reboot the 
+            computer once this function is executed so that all changes will be applied.
+            </summary>
+            <remarks>
+            A bug with the Axis configuration commands has been detected and reported to the Axis team. 
+            If the given backed up configuration file contains Privacy Masks and the remote Axis camera does not 
+            contain any defined Privacy Mask, the function will not recover them. Only if the remote Axis has at least a Privacy Mask
+            defined (it can be disabled) it will recover the backed up Privacy Masks. The bug will not be fixed until the Axis support team will fix it.
+            
+            This function will override the contents of the remote configuration.
+            By modifying the configuration, the user is responsible for any malfunction of
+            the camera. 
+            </remarks>
+            <param name="configFile">Content of the device configuration backup file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigBackupException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAccesToAxisException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnableToSetAxisConfigException"></exception>
+            <exception cref="T:Imagsa.Chronos.RestartProcessorException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.RebootAtalayaException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetAtalaiaServerFile">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Obtains the atalaiaServer configuration file.
+            </summary>
+            <returns>Retrieved content of atalaiaServer configuration file.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetAtalaiaServerFile(System.String)">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Writes atalaiaServer configuration file and apply the changes.   
+            </summary>
+            <remarks>
+            This function will override the contents of the remote file \a atalaiaServer.ini
+            which is mainly used to configure parameters of AtalaiaServer (viewer configuration, etc..). By
+            modifying this file, the user is responsible for any malfunction of
+            the camera. Please contact your distributor to learn how you must
+            modify this configuration file.
+            </remarks>
+            <param name="configFile">Content of the device configuration file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.RebootAtalayaException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetExposureTimeFile">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Obtains the exposureTimeOverride configuration file.
+            </summary>
+            <returns>Retrieved content of exposureTimeOverride configuration file.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetExposureTimeFile(System.String)">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Writes exposureTimeOverride configuration file and apply the changes.   
+            </summary>
+            <remarks>
+            This function will override the contents of the remote file \a exposureTimeOverride.txt
+            which is mainly used to configure the set of exposure times used by AtalaiaServer. By
+            modifying this file, the user is responsible for any malfunction of
+            the camera. Please contact your distributor to learn how you must
+            modify this configuration file.
+            </remarks>
+            <param name="configFile">Content of the device configuration file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.RebootAtalayaException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetOCRFile">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Obtains the OCR configuration file.
+            </summary>
+            <returns>Retrieved content of OCR configuration file.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetOCRFile(System.String)">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Writes OCR configuration file and apply the changes.   
+            </summary>
+            <remarks>
+            This function will override the contents of the remote file \a OCR.ini
+            which is mainly used to configure the OCR plugin. By
+            modifying this file, the user is responsible for any malfunction of
+            the camera. Please contact your distributor to learn how you must
+            modify this configuration file.
+            </remarks>
+            <param name="configFile">Content of the device configuration file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetVehicleTrackerFile">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Obtains the VehicleTracker configuration file.
+            </summary>
+            <returns>Retrieved content of VehicleTracker configuration file.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetVehicleTrackerFile(System.String)">
+            <summary>
+            Please, do not use this function yet. It is under development and will be fully functional in the near future.
+            Writes VehicleTracker configuration file and apply the changes.   
+            </summary>
+            <remarks>
+            This function will override the contents of the remote file \a vehicleTracker.ini
+            which is mainly used to configure the VehicleTracker plugin. By
+            modifying this file, the user is responsible for any malfunction of
+            the camera. Please contact your distributor to learn how you must
+            modify this configuration file.
+            </remarks>
+            <param name="configFile">Content of the device configuration file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ConfigFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetAxisConfig">
+            <summary>
+            Obtains the Axis configuration file. Take into account that this function can take up to 20 seconds to recover the
+            full set of configuration parameters.
+            </summary>
+            <returns>Retrieved content of Axis configuration.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAccesToAxisException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnableToGetAxisConfigException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetAxisConfig(System.String)">
+            <summary>
+            Sends to the Axis color camera (the one with the default IP Address) a given configuration. Take into account that this function can take up to 1 minute to set the
+            full set of configuration parameters.          
+            </summary>
+            <remarks>
+            This function will override the contents of the remote Axis configuration. By
+            modifying this file, the user is responsible for any malfunction of
+            the camera. Please contact your distributor to learn how you must
+            modify this configuration file.
+            
+            A bug with the Axis configuration commands has been detected and reported to the Axis team. 
+            If the given backed up configuration file contains Privacy Masks and the remote Axis camera does not 
+            contain any defined Privacy Mask, the function will not recover them. Only if the remote Axis has at least a Privacy Mask
+            defined (it can be disabled) it will recover the backed up Privacy Masks. The bug will not be fixed until the Axis support team will fix it.
+            
+            </remarks>
+            <param name="configFile">Content of the AXIS configuration.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAccesToAxisException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnableToSetAxisConfigException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.AddList(System.Int32,System.Boolean)">
+            <summary>
+            Adds a new list with an specified identification number.
+            </summary>
+            <param name="listId">A integer value that represents the list identification number.</param>
+            <param name="black">A boolean value that indicates if the list is black.</param>
+            <remarks>If the list is black, the matches with the recognized license plates will
+            be generated when the corresponding license plate is in the list. Otherwise,
+            when the list is white, all the license plates not found in the list will generate
+            a match.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListAlreadyExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.DeleteList(System.Int32)">
+            <summary>
+            Deletes an specified list. 
+            </summary>
+            <param name="listId">Identification number of the list to delete.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetListColor(System.Int32)">
+            <summary>
+            Retrieves the color of an specified list. 
+            </summary>
+            <param name="listId">Identification number of the list.</param>
+            <returns>A boolean value indicating if the list is white (false) or black (true).</returns>
+            <remarks>If the list is black, the matches with the recognized license plates will be generated when the corresponding license plate is in the list. Otherwise, when the list is white, all the license plates not found in the list will generate a match.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetListColor(System.Int32,System.Boolean)">
+            <summary>
+            Changes the color of an specified list.
+            </summary>
+            <param name="listId">Identification number of the list.</param>
+            <param name="color">A boolean value indicating if the list must be white (false) or black (true).</param>
+            <remarks>If the list is black, the matches with the recognized license plates will be generated when the corresponding license plate is in the list. Otherwise, when the list is white, all the license plates not found in the list will generate a match.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.AddPlate(System.Int32,System.String)">
+            <summary>
+            Adds a new plate into an specified list.
+            </summary>
+            <param name="listId">Identification number of the list in which add the plate.</param>
+            <param name="plate">A string including the license plate.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.PlateAlreadyExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.AddPlates(System.Int32,System.Collections.Generic.List{System.String})">
+            <summary>
+            Adds new plates into an specified list. If one of the plates already exists it is discarded.
+            </summary>
+            <param name="listId">Identification number of the list in which add the plates.</param>
+            <param name="plates">A list of license plates.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.DeletePlate(System.Int32,System.String)">
+            <summary>
+            Deletes a plate from an specified list.
+            </summary>
+            <param name="listId">Identification number of the list in which delete the plate.</param>
+            <param name="plate">An string including the license plate.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.PlateNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetLists">
+            <summary>
+            Retrieves the list identifiers.
+            </summary>
+            <returns>Identification number of the existing lists.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetPlates(System.Int32)">
+            <summary>
+            Obtains a full list of plates form an specified list.
+            </summary>
+            <param name="listId">Identification number of the list.</param>
+            <returns>Retrieved list of plates from the specified list.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.ListNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSaveAllVehicles">
+            <summary>
+            Retrieves a value that indicates if the event data must be saved even
+            if the vehicle is not an infractor.
+            </summary>
+            <remarks>Remember that in the remote machine the old images of the vehicles are removed
+            when the disk space is lower than a certain value. Usually the vehicle data corresponding
+            to one event stores about 2~3 MBytes in the disk, so one can approximate the number of
+            events that will be stored in the disk before cleaning, taking into account that the disk
+            space is about 40 GBytes.</remarks>
+            <returns>A boolean value that indicates if the event data must be saved even
+            if the vehicle is not an infractor.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetSaveAllVehicles(System.Boolean)">
+            <summary>
+            Sets a value that indicates if the event data must be saved even
+            if the vehicle is not an infractor.
+            </summary>
+            <remarks>
+            Remember that in the remote machine the old images of the vehicles are removed
+            when the disk space is lower than a certain value. Usually the vehicle data corresponding
+            to one event stores about 2~3 MBytes in the disk, so one can approximate the number of
+            events that will be stored in the disk before cleaning, taking into account that the disk
+            space is about 40 GBytes.
+            </remarks>
+            <param name="saveAllVehicles">A boolean value that indicates if the event data must be saved even
+            if the vehicle is not an infractor.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetPendingInfo(System.Int32,System.Int32,System.String@,System.String@)">
+            <summary>
+            Obtains the num of pending vehicles an oldest pending vehicle in the list.	
+            </summary>
+            <returns>
+            number of vehicles pending in first and second CPU as well as the oldest vehicle's name
+            </returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.AddCamera(System.Int32,System.String,System.Int32,System.Boolean,System.String,System.Int32,System.Int32)">
+            <summary>
+            Adds a camera to the system in the desired point of the section. Returns
+            the camera identification number, otherwise an exception is thrown.
+            </summary>
+            <param name="camId">An integer value that represents the camera identification number for the corresponding point of the section.</param>
+            <param name="address">A string containing the hostname address of the camera.</param>
+            <param name="port">The TCP/IP port of the camera.</param>
+            <param name="port">The TCP/IP port of the camera.</param>
+            <param name="password">Password for login (if required).</param>
+            <param name="point">Section point number, being 0 for the first point of the section
+            and 1 for the second one.</param>
+            <returns>A camera object representing the camera connected to the system.</returns>
+            <remarks>
+            Please take into account that currently the possible values for the
+            point parameter are 0 and 1, where 0 means that the camera is placed
+            in the initial point of the section and 1 means that the camera is
+            placed in the second point of the section.
+            </remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.CameraAlreadyExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.DeleteCamera(System.Int32,System.Int32)">
+            <summary>
+            Deletes the camera that has the camera identification number passed as an argument.
+            Take into account that each section point has its own camera identification number
+            list.
+            </summary>
+            <param name="camId">Camera identification number which must be deleted.</param>
+            <param name="point">Section point number, being 0 for the first point of the section
+            and 1 for the second one.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.CameraNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetCameras">
+            <summary>
+            Retrieves the full list of cameras connected to the system.
+            </summary>
+            <returns>A full list of cameras connected to the system.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetSpeedLimit(System.Double,System.Double)">
+            <summary>
+            Sets the speed limit of the section using the section distance.
+            </summary>
+            <param name="speedLimit">A double floating point value representing the speed
+            limit in meters per second.</param>
+            <param name="sectionLength">A double floating point value representing the
+            section length in meters.</param>
+            <remarks>Please take a look to SetMinTime() function since it has the same
+                  functionality. Chronos' Section internally uses minimum time so
+                  at the end this function computs a quotient between the section
+                  distance and the speed limit.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSectionLength">
+            <summary>
+            Gets the length of the section in meters.
+            </summary>
+            <returns>
+            A double floating point value
+            representing the length of the section in meters.
+            </returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetSectionLength(System.Double)">
+            <summary>
+            Sets the length of the section in meters.
+            </summary>
+            <param name="sectionLength">A double floating point value
+            representing the length of the section in meters.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMinTime">
+            <summary>
+            Gets the minimum time of the section at which the vehicle is
+            considered an offending vehicle.
+            </summary>
+            <returns>
+            A double floating point value representing the time in
+            seconds to assign it as a minimum time of the section.
+            </returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetMinTime(System.Double)">
+            <summary>
+            Sets the minimum time of the section at which the vehicle is
+            considered an offending vehicle.
+            </summary>
+            <param name="minTime">A double floating point value representing the time in
+            seconds to assign it as a minimum time of the section.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetTimeToLive">
+            <summary>
+            Gets the time at which the vehicle is discarded in the case that no
+            correspondence has been found in two points. Time to live must be
+            higher than min time.
+            </summary>
+            <returns>
+            A double floating point value representing
+            the time to live of the vehicles in the section.
+            </returns>
+            <remarks>There are several reasons that may cause that a vehicle reaches its time
+                  to leave:
+                  - One of the cameras has failed during the vehicle detection or while
+                    retrieving the plate using the OCR. Thus, it is not possible to find
+                    the correspondence between a capture in one camera and a capture
+                    of the same vehicle in any camera in another point.
+                  - The vehicle has a really low speed and it has not yet reached the
+                    second point of the section.
+                  - The vehicle has been in an accident and it has been only detected
+                    in the first point of the section.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetTimeToLive(System.Double)">
+            <summary>
+            Sets the time at which the vehicle is discarded in the case that no
+            correspondence has been found in two points. Time to live must be
+            higher than min time.
+            </summary>
+            <param name="timeToLive">A double floating point value representing
+            the time to live of the vehicles in the section.</param>
+            <remarks>There are several reasons that may cause that a vehicle reaches its time
+                  to leave:
+                  - One of the cameras has failed during the vehicle detection or while
+                    retrieving the plate using the OCR. Thus, it is not possible to find
+                    the correspondence between a capture in one camera and a capture
+                    of the same vehicle in any camera in another point.
+                  - The vehicle has a really low speed and it has not yet reached the
+                    second point of the section.
+                  - The vehicle has been in an accident and it has been only detected
+                    in the first point of the section.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSaveNonInfractors">
+            <summary>
+            Gets the value of a parameter that causes the system to generate an event even
+            when the vehicle speed is lower than the limit.
+            </summary>
+            <returns>
+            A boolean value that indicates if the parameter is enabled or not.
+            </returns>
+            <remarks>An infractor is considered once the time between the two captures
+            is lower than a value called min time. By enabling this parameter, all the vehicles
+            that have been detected in both first and second points of the section will
+            generate an event.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetSaveNonInfractors(System.Boolean)">
+            <summary>
+            Sets the value of a parameter that causes the system to generate an event even
+            when the vehicle speed is lower than the limit.
+            </summary>
+            <param name="saveNonInfractors">A boolean value that indicates if the
+            parameter is enabled or not.</param>
+            <remarks>An infractor is considered once the time between the two captures
+            is lower than a value called min time. By enabling this parameter, all the vehicles
+            that have been detected in both first and second points of the section will
+            generate an event.</remarks>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSaveExpiredVehicles">
+            <summary>
+            Gets the value of a parameter that causes the system to generate an event even
+            if the vehicle has been recognized in only one point of the section.
+            </summary>
+            <returns>
+            A boolean value that indicates if the parameter is enabled or not.
+            </returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetSaveExpiredVehicles(System.Boolean)">
+            <summary>
+            Sets the value of a parameter that causes the system to generate an event even
+            if the vehicle has been recognized in only one point of the section.
+            </summary>
+            <param name="saveExpiredVehicles">A boolean value that indicates if the
+            parameter is enabled or not.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.TransferEventData(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Starts transfering the event data from the remote camara to the
+            central computer. This function is mandatory when downloading BMP, overview,
+            color overview...
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="camId">An unsigned integer number that identifies the camera
+                                in the desired point.</param>
+            <param name="point">A value regarding the point from which the camera must
+                                be stoped and deleted.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.CameraNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.VehicleDataNotFoundException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.CheckTransfer(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Asks the server for the progress percentage of the last event
+            transfer. This function is only valid when TransferEventData function has been
+            called before.
+            </summary>
+            <param name="camId">An unsigned integer number that identifies the camera
+                                in the desired point.</param>
+            <param name="point">A value regarding the point from which the camera must
+                                be stoped and deleted.</param>
+            <param name="eventId">Event identification number.</param>
+            <return>Progress value in percentage, being -1 when there is
+                    some error such as the event data is not stored in the
+                    remote camera.</return>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.CameraNotExistException"></exception>
+            <exception cref="T:Imagsa.Chronos.VehicleDataNotFoundException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetFirstCaptureBMP(System.Int32)">
+            <summary>
+            Retrieves the whole bitmap of the first capture given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSecondCaptureBMP(System.Int32)">
+            <summary>
+            Retrieves the whole bitmap of the second capture given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetFirstCaptureOverview(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves the overview image of the first capture given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSecondCaptureOverview(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves the overview image of the second capture given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetFirstCaptureColorOverview(System.Int32)">
+            <summary>
+            Retrieves the list of color overview images of the first capture given an event
+            identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list of ColorOverview objects representing the color overview images.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSecondCaptureColorOverview(System.Int32)">
+            <summary>
+            Retrieves the list of color overview images of the second capture given an event
+            identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <returns>A list of ColorOverview objects representing the color overview images.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetFirstCaptureBestPlate(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves the best scored plate image of the first capture given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>Raw data of the image stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSecondCaptureBestPlate(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves the best scored plate image of the second capture given an event identification number.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>Raw data of the image stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.InvalidRoiException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.RemoveFirstCaptureBMP(System.Int32)">
+            <summary>
+            Removes the first capture BMP file from the remote machine.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.RemoveSecondCaptureBMP(System.Int32)">
+            <summary>
+            Removes the second capture BMP file from the remote machine.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSpotSpeedTicket(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves an image that represents a ticket for spot speed infractors.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetSecondaryCheckTicket(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves an image that represents a ticket for speed infractors with secondary check on it.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.Recompute(System.Int32)">
+            <summary>
+            Recomputes the vehicle speed improving the engine by re-scaling the image.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <remarks>This method takes the previously analyzed images re-scaling them by a
+            factor of 4. A new event will be generated once the new speed has been recomputed.</remarks>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetMaxSpeed">
+            <summary>
+            Gets the maximum allowed speed at which the vehicle is
+            considered an offending vehicle.
+            </summary>
+            <returns>
+            A double floating point value representing the speed
+            in meters per second to assign it as a max allowed speed.
+            </returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetMaxSpeed(System.Double)">
+            <summary>
+            Sets the max allowed speed at which the vehicle is
+            considered an offending vehicle.
+            </summary>
+            <param name="maxSpeed">A double floating point value representing the speed
+            limit in meters per second.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetRedLightTicket(System.Int32,System.Int32@,System.Int32@)">
+            <summary>
+            Retrieves an image that represents a ticket for red light infractors.
+            </summary>
+            <param name="eventId">Identification number of the event.</param>
+            <param name="width">Total width in pixels of the retrieved image.</param>
+            <param name="height">Total height in pixels of the retrieved image.</param>
+            <returns>A bitmap file stored into a byte array of an specific length that can be saved into the disk.</returns>
+            <exception cref="T:Imagsa.Chronos.EventNotExistsException"></exception>
+            <exception cref="T:Imagsa.Chronos.EventDataException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.OverviewException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetTrafficLightSetFile">
+            <summary>
+            Obtains the traffic light set configuration file from the remote machine.
+            </summary>
+            <returns>Retrieved content of the device traffic light set configuration file.</returns>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.TrafficLightSetFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.GetNTPClientConfiguration(System.String@,System.Int32@)">
+            <summary>
+            Obtains the NTP Configuration from the camera.
+            </summary>
+            <param name="wsNTPServer">NTP Server.</param>
+            <param name="iPolInterval">Time indicating the uptdate interval.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.GetNTPException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetNTPClientConfiguration(System.String,System.Int32)">
+            <summary>
+            Set the NTP Configuration from the camera.
+            </summary>
+            <param name="wsNTPServer">NTP Server.</param>
+            <param name="iPolInterval">Time indicating the uptdate interval.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.SetNTPException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.EnableNTP">
+            <summary>
+            Enable the NTP.
+            </summary>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.EnableNTPException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.DisableNTP">
+            <summary>
+            Disable the NTP.
+            </summary>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.DisableNTPException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.SetTrafficLightSetFile(System.String)">
+            <summary>
+            Writes the traffic light set configuration file and apply the changes.
+            </summary>
+            <remarks>
+            This function will override the contents of the remote traffic light set configuration file
+            which is mainly used to configure parameters of the traffic light set,
+            such as the traffic lamps, arrows, their positions, colors, and directions.
+            Modifying this file, the user can manage the traffic light set. Once finished,
+            the remote machine restarts the ImageDumper process in order to reload the
+            traffic light set configuration file.
+            </remarks>
+            <param name="tlsFile">Content of the traffic light set configuration file.</param>
+            <exception cref="T:Imagsa.Chronos.UnknownException"></exception>
+            <exception cref="T:Imagsa.Chronos.UnknownCommandException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotConnectedException"></exception>
+            <exception cref="T:Imagsa.Chronos.TrafficLightSetFileException"></exception>
+            <exception cref="T:Imagsa.Chronos.RebootImageDumperException"></exception>
+            <exception cref="T:Imagsa.Chronos.NotAllowedException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.ChronosSDK.MailReport(System.String,System.Int32,System.String,System.String,System.Collections.Generic.List{Imagsa.Chronos.Event},System.String)">
+            <summary>
+            Sends a mail notification from a list of events.
+            </summary>
+            <param name="smtpServer">Hostname or address of the remote SMTP server.</param>
+            <param name="smtpPort">TCP/IP port to use.</param>
+            <param name="smtpUsername">Username of the SMTP account.</param>
+            <param name="smtpPassword">Password of the SMTP account.</param>
+            <param name="events">List of events to be included in the mail report.</param>
+            <param name="smtpDestination">Destination e-mail address.</param>
+        </member>
+        <member name="T:Imagsa.Chronos.Camera">
+            <summary>
+            Represents a camera connected to the Chronos' Section server.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.Camera.#ctor">
+            <summary>
+            Default constructor. Initializes the object.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.Camera.#ctor(System.String)">
+            <summary>
+            Initializes the object from a string.
+            </summary>
+            <param name="str">String containing the simple data of the camera.</param>
+        </member>
+        <member name="M:Imagsa.Chronos.Camera.#ctor(System.Int32,System.String,System.Int32,System.String,System.Int32,System.Int32)">
+            <summary>
+            Initializes the main variables and objects.
+            </summary>
+            <param name="id">An unsigned integer value corresponding to the camera identification number.</param>
+            <param name="address">A string representing the camera hostname.</param>
+            <param name="port">An unsigned integer value corresponding to the camera TCP/IP port.</param>
+            <param name="password">A string representing the camera password.</param>
+            <param name="point">An unsigned integer value corresponding to the point number in which the camera is placed.</param>
+            <param name="lastEventId">An unsigned integer value corresponding to the last event identification number generated by the camera.</param>
+        </member>
+        <member name="M:Imagsa.Chronos.Camera.ToString">
+            <summary>
+            Conversion from Camera object into a string.
+            </summary>
+            <returns>Returns all the information about the camera serialized as a string.</returns>
+        </member>
+        <member name="P:Imagsa.Chronos.Camera.Id">
+            <summary>
+            Gets or sets the identification number of the camera in the corresponding point.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Camera.Address">
+            <summary>
+            Gets or sets the hostname address of the camera.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Camera.Port">
+            <summary>
+            Gets or sets the TCP/IP port of the camera.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Camera.Password">
+            <summary>
+            Gets or sets the password of the camera.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Camera.Point">
+            <summary>
+            Gets or sets the point number of the section being 0 for the first point of
+            the section and 1 the second one.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Camera.LastEventId">
+            <summary>
+            Gets or sets the last event identification number generated by the camera.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ListResult">
+            <summary>
+            Class used to store the matchings of the respective plate in the total set of lists.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.ListResult.listId">
+            <summary>
+            List identification number of the match.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.ListResult.result">
+            <summary>
+            Result of the match in the list.
+            </summary>
+            <remarks>
+            This value is true in two cases: when the list is black and the license
+            plate is in the list and when the list is white and the license plate
+            is not in the list. Otherwise this value is false.
+            </remarks>
+        </member>
+        <member name="M:Imagsa.Chronos.ListResult.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="listId">List identification number of the match.</param>
+            <param name="result">Result of the match in the list.</param>
+        </member>
+        <member name="T:Imagsa.Chronos.Color">
+            Possible traffic light colors.
+        </member>
+        <member name="F:Imagsa.Chronos.Color.COLOR_RED">
+            <summary>
+            Represents the red traffic light color.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Color.COLOR_YELLOW">
+            <summary>
+            Represents the yellow traffic light color.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Color.COLOR_GREEN">
+            <summary>
+            Represents the green traffic light color.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Color.COLOR_BLUE">
+            <summary>
+            Represents the blue traffic light color.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Color.COLOR_OTHER">
+            <summary>
+            Represents an unknown traffic light color.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.Event">
+            <summary>
+            Class used to work with events. Provides functions to retrieve data such as the best image, the whole overview capture image...
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.#ctor">
+            <summary>
+            Initializes the object.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.fromString(System.String)">
+            <summary>
+            Initializes all the event data from a string.
+            </summary>
+            <param name="str">String representation of the event data.</param>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.PushEventData(System.String,System.String)">
+            <summary>
+            Adds an event data into the event data list.
+            </summary>
+            <param name="key">Key of the data to be added</param>
+            <param name="value">Value of the data to be added</param>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.getDateTime">
+            <summary>
+            Gets a DateTime object of the event.
+            </summary>
+            <returns>Returns a DateTime object containing the creation date and time of the Event.</returns>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.setDateTime(System.DateTime)">
+            <summary>
+            Sets a DateTime object of the event.
+            </summary>
+            <param name="dateTime">A DateTime object containing the creation date and time of the Event.</param>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.getSerialNumber">
+            <summary>
+            Gets the serial number of the camera that created the event.
+            </summary>
+            <returns>Returns a string containing serial number of the camera that generated the event.</returns>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.getFileName">
+            <summary>
+            Gets the filename of the BMP in the remote device.
+            </summary>
+            <returns>Returns a string containing the file name of the BMP file.</returns>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.defaults">
+            <summary>
+            Initializes the event fields.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Event.StaticDistance">
+            <summary>
+            Distance between the two points. Use this static value in
+            order to retrieve the vehicle speed of each event.
+            </summary>
+            <remarks>In the end this variable is not required but the implementation
+            is due to demonstration purposes by binding the property
+            Speed into the demo application WPF DataGrid.</remarks>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.getFirstFileName">
+            <summary>
+            Gets the filename of the first capture BMP in the remote device.
+            </summary>
+            <returns>Returns a string containing the file name of the BMP file.</returns>
+        </member>
+        <member name="M:Imagsa.Chronos.Event.getSecondFileName">
+            <summary>
+            Gets the filename of the second capture BMP in the remote device.
+            </summary>
+            <returns>Returns a string containing the file name of the BMP file.</returns>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.EventData">
+            <summary>
+            Gets the full event data list.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Id">
+            <summary>
+            Gets the identification number of the event.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Tid">
+            <summary>
+            Gets the original vehicle identification number.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Plate">
+            <summary>
+            Gets the license plate which matched best of the capture.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.PlateScore">
+            <summary>
+            Gets the license plate score which matched best of the capture.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.PlateCoords">
+            <summary>
+            Gets the license plate coords which matched best of the capture.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.BestPlate">
+            <summary>
+            Gets the best plate image on the remote device.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.OCR_Score">
+            <summary>
+            Gets the license OCR plate score which matched best of the capture.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.OCR_ROIIndex">
+            <summary>
+            Gets the best OCR plate image on the remote device.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.ADR_Score">
+            <summary>
+            Gets the license ADR plate score which matched best of the capture.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.ADR_ROIIndex">
+            <summary>
+            Gets the best ADR plate image on the remote device.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.TRAILER_Score">
+            <summary>
+            Gets the license TRAILER plate score which matched best of the capture.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.TRAILER_ROIIndex">
+            <summary>
+            Gets the best TRAILER plate image on the remote device.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Created">
+            <summary>
+            Gets the creation DateTime of the Event at GMT.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.CreatedLocal">
+            <summary>
+            Gets the creation DateTime of the Event at local time.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.CameraSerial">
+            <summary>
+            Gets the serial number of the camera that created the event.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Video">
+            <summary>
+            Retrieves a flag indicating if the BMP file contains a color video.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.VehicleLane">
+            <summary>
+            Gets the string representation of the vehicleLane.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Speed2D">
+            <summary>
+            Gets the string representation of the 2D computed vehicle speed.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.VehicleClassification">
+            <summary>
+            Gets the string representation of the vehicle classification.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.CameraId">
+            <summary>
+            Gets the identification number of the camera.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.FirstCaptureDateTime">
+            <summary>
+            Gets a DateTime object of the captured vehicle in the first Atalaya at GMT.
+            </summary>
+            <returns>A DateTime object of the captured vehicle in the first Atalaya.</returns>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.FirstCaptureDateTimeLocal">
+            <summary>
+            Gets a DateTime object of the captured vehicle in the first Atalaya at local time.
+            </summary>
+            <returns>A DateTime object of the captured vehicle in the first Atalaya.</returns>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.SecondCaptureDateTime">
+            <summary>
+            Gets a DateTime object of the captured vehicle in the second Atalaya at GMT.
+            </summary>
+            <returns>A DateTime object of the captured vehicle in the second Atalaya.</returns>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.SecondCaptureDateTimeLocal">
+            <summary>
+            Gets a DateTime object of the captured vehicle in the second Atalaya at local time.
+            </summary>
+            <returns>A DateTime object of the captured vehicle in the second Atalaya.</returns>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.TravelTime">
+            <summary>
+            Retrieves the time difference in seconds (with precision of
+            milliseconds) between the two captures.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.SectionSpeed">
+            <summary>
+            Retrieves the vehicle speed by using the specified
+            distance in the corresponding static distance variable.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.VideoFirst">
+            <summary>
+            Retrieves a flag indicating if the BMP of the first Atalaya file contains a color video.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.VideoSecond">
+            <summary>
+            Retrieves a flag indicating if the BMP of the second Atalaya file contains a color video.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Results">
+            <summary>
+            Retrieves the matches between the recognized license plate
+            and the license plate lists in the remote machine.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Speed">
+            <summary>
+            Gets the computed speed of the vehicle in meters per second.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.SpeedKmh">
+            <summary>
+            Gets the computed speed of the vehicle in kilometers per hour.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Distance">
+            <summary>
+            Gets the computed distance of the vehicle between the two main matching positions.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.SpeedError">
+            <summary>
+            Gets the error identification number resulting from the computation of the 3D speed (for internal purposes).
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Offending">
+            <summary>
+            Retrieves a flag that indicates if the vehicle is an offending vehicle.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.TrafficLightColor">
+            <summary>
+            Retrieves the activated traffic light color.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.NextTrafficLightColor">
+            <summary>
+            Retrieves the next traffic light color.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.LightTime">
+            <summary>
+            Retrieves the time, in milliseconds, that red light has been on until the vehicle has been detected.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.NextLightTime">
+            <summary>
+            Retrieves the time, in milliseconds, to the next traffic light change
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.LightProbability">
+            <summary>
+            Retrieves the traffic light decision probability.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.NextLightProbability">
+            <summary>
+            Retrieves the next traffic light decision probability.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Cross">
+            <summary>
+            Returns, if exists, a string representation of the retrieved vehicle relative position to the crossing line.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.Event.Trajectory">
+            <summary>
+            Returns, if exists, a string representation of the trajectory of the vehicle.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.Elevation">
+            <summary>
+            The enumeration that corresponds to the possible values obtained by the
+            Login() function.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Elevation.ELEVATION_ZERO">
+            <summary>
+            No elevation.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Elevation.ELEVATION_ONE">
+            <summary>
+            User elevation. If a user password is used, this elevation provides basic
+            data retrieval such as events and images, and some main configuration.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Elevation.ELEVATION_TWO">
+            <summary>
+            Admin elevation. If an admin password is used, this elevation provides the
+            same as ELEVATION_ONE and some more administrative functions such as
+            camera configuration and system resetting.
+            </summary>
+        </member>
+        <member name="F:Imagsa.Chronos.Elevation.ELEVATION_THREE">
+            <summary>
+            Super admin elevation. This elevation provides all the possible interaction
+            and configuration of the remote camera.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.SimulationProductException">
+            <summary>
+            The exception that is thrown when the remote host server correspond to a
+            simulation process of the corresponding product of this SDK.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ChronosException">
+            <summary>
+            The exception that is thrown when an error is returned by a SDK method.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.IncorrectVersionException">
+            <summary>
+            The exception that is thrown when the remote host server version does not correspond to the version of this SDK.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.IncorrectProductException">
+            <summary>
+            The exception that is thrown when the remote host server does not correspond to the product of this SDK.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ConnectionErrorException">
+            <summary>
+            The exception that is thrown when the connection with the remote host is not possible.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ClosingErrorException">
+            <summary>
+            The exception that is thrown when an error is returned if connection can not be closed successfully.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.UnknownException">
+            <summary>
+            The exception that is thrown when an unknown error occurs.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.UnknownCommandException">
+            <summary>
+            The exception that is thrown when the remote machine does not implement the command.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.NotConnectedException">
+            <summary>
+            The exception that is thrown when the connection with the remote host is not yet established.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.NotAccesToAxisException">
+            <summary>
+            The exception that is thrown when there is no connexion with the Axis camera.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.UnableToGetAxisConfigException">
+            <summary>
+            The exception that is thrown when it is not possible to get the configuration from the Axis camera.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.UnableToSetAxisConfigException">
+            <summary>
+            The exception that is thrown when it is not possible to get the configuration from the Axis camera.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ListAlreadyExistsException">
+            <summary>
+            The exception that is thrown when the specified list identification number already exists.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ListNotExistException">
+            <summary>
+            The exception that is thrown when the specified list does not exist.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.PlateAlreadyExistException">
+            <summary>
+            The exception that is thrown when the specified license plate already exists in the list.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.PlateNotExistException">
+            <summary>
+            The exception that is thrown when the specified plate does not exist in the list.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.CameraAlreadyExistsException">
+            <summary>
+            The exception that is thrown when there is a camera in the remote host with the 
+            same camera identification number.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.CameraNotExistException">
+            <summary>
+            The exception that is thrown when the camera does not exist in the remote host.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.VehicleDataNotFoundException">
+            <summary>
+            The exception that is thrown when the vehicle data is not found in the remote camera.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.EventNotExistsException">
+            <summary>
+            The exception that is thrown when the event does not exist in the remote host.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.EventException">
+            <summary>
+            The exception that is thrown when an event error occurs.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.OverviewException">
+            <summary>
+            The exception that is thrown when the overview of the bitmap file seems to be
+            corrupted or disappeared.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.InvalidRoiException">
+            <summary>
+            The exception that is thrown when the best plate capture image could not be retrieved.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.EventDataException">
+            <summary>
+            The exception that is thrown when the corresponding bitmap file of the event
+            does not exist in the remote host. A possible reason is that the file has been
+            previously deleted.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.NotColorPluginDataException">
+            <summary>
+            The exception that is thrown when the the corresponding bitmap file of the event
+            does not contain the requested color plugin data.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.FreeSpaceException">
+            <summary>
+            The exception that is thrown while retrieving the free disk space.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ConfigFileException">
+            <summary>
+            The exception that is thrown when cannot read or write the camera configuration file.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.ConfigBackupException">
+            <summary>
+            Error value that imagsa::chronos::ChronosSDK::SetConfigBackup() returns when at least one of the backup files has not been 
+            successfully copied into the camera
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.RestartProcessorException">
+            <summary>
+            Error value that returns when it is not possible to restart Chronos Processor after updating
+            any of the chronos configurations files. This error value could be returned by some functions
+            such as imagsa::chronos::ChronosSDK::SetOCRFile(), imagsa::chronos::ChronosSDK::SetVehicleClassificationFile(),
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.TrafficLightSetFileException">
+            <summary>
+            The exception that is thrown when cannot read or write the traffic light set configuration file.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.NotAllowedException">
+            <summary>
+            The exception that is thrown when the function requires elevation privileges.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.RebootAtalayaException">
+            <summary>
+            The exception that is thrown when cannot reboot Atalaya server process.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.RebootImageDumperException">
+            <summary>
+            The exception that is thrown when cannot reboot ImageDumper process.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.GetNTPException">
+            <summary>
+            The exception that is thrown when cannot get the NTP configuration.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.SetNTPException">
+            <summary>
+            The exception that is thrown when cannot set the NTP configuration.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.EnableNTPException">
+            <summary>
+            The exception that is thrown when cannot enable the NTP.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.DisableNTPException">
+            <summary>
+            The exception that is thrown when cannot disable the NTP.
+            </summary>
+        </member>
+        <member name="T:Imagsa.Chronos.VideoDecoder">
+            <summary>
+            Provides methods for extracting frames while iterating through a video.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.VideoDecoder.#ctor">
+            <summary>
+            Default constructor. Initializes the main variables and objects.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.VideoDecoder.Dispose">
+            <summary>
+            Frees all the objects.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.VideoDecoder.Open(System.String)">
+            <summary>
+            Opens the video file and prepares everything for start extracting frames.
+            </summary>
+            <param name="filename">A string that represents the path of the file.</param>
+            <exception cref="T:System.IO.FileNotFoundException"></exception>
+        </member>
+        <member name="M:Imagsa.Chronos.VideoDecoder.Close">
+            <summary>
+            Closes the video file and free the memory allocated by the objects that represent the file.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.VideoDecoder.Next(Imagsa.Chronos.ColorOverview@,System.Int32@)">
+            <summary>
+            Decodes the next frame and returns it if it has been possible.
+            </summary>
+            <param name="colorOverview">A reference to a ColorOverview object that represents the video frame.</param>
+            <param name="colorOverview">Returns the number of total dropped frames.</param>
+            <returns>A boolean value that indicates if a new frame has been successfully extracted.</returns>
+        </member>
+        <member name="T:Imagsa.Chronos.ColorOverview">
+            <summary>
+            Class used to work with color overview objects. Take into account that chronosSdk makes use of a ColorOverview object in two different ways:
+            (1) A single object can store the data of a whole compressed JPEG video.
+            (2) A single object can store the data of a single BMP or JPEG image.
+            The former, uses the timestamp class attribute as an index (same value than nReference). That index, corresponds to the position at the array of color frames of the frame that is syncrhonized with
+            the detection at the main atalaia camera. 
+            The later, uses the timestamp class attribute as a common timestamp. Its values represents the milliseconds with respect to the first color image stored at the vehicle.
+            Additionaly, the variable referenceTimestamp is always a common timestamp representing the CPU time of capture of the reference frame (nReference).
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.ColorOverview.#ctor">
+            <summary>
+            Default constructor. Initializes the object.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.ColorOverview.#ctor(System.Int32,System.String,System.String,System.Byte[])">
+            <summary>
+            Default constructor. Initializes the object.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.ColorOverview.#ctor(System.Int32,System.String,System.String,System.Byte[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Default constructor. Initializes the object.
+            </summary>
+        </member>
+        <member name="M:Imagsa.Chronos.ColorOverview.#ctor(System.Int32,System.String,System.String,System.Byte[],System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Double)">
+            <summary>
+            Default constructor. Initializes the object.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Frame">
+            <summary>
+            Gets or sets the frame number of the image sequence.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Width">
+            <summary>
+            Gets or sets the frame width.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Height">
+            <summary>
+            Gets or sets the frame height.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Channels">
+            <summary>
+            Gets or sets the channels per pixel. The attribute represents the number of channels.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Format">
+            <summary>
+            Gets or sets the image format.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Timestamp">
+            <summary>
+            Gets or sets a string that represents the timestamp of the image capture.In the case the color overview contains the data of an image, this variable
+            is a string representing the timestamp of the frame with respect with the first ColorOverview of the array.
+            In case the color overview contains the data of a color video, the variable represents the index of the
+            reference frame (the frame that is synchronized with the detection of the main Atalaia camera) at the video.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.BitmapData">
+            <summary>
+            Gets or sets the byte array that represents the raw data of the image.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.Lenght">
+            <summary>
+            Gets or sets the lenght of the data. 
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.NReference">
+            <summary>
+            Gets or sets the nReference value of the given colorOverview. The attribute represents the index of the frame at the original array of frames that is synchronized with the detection.
+            </summary>
+        </member>
+        <member name="P:Imagsa.Chronos.ColorOverview.ReferenceTimestamp">
+            <summary>
+            Gets or sets the referenceTimestamp value of the given colorOverview. The attribute represents a value in timestamp format that represents the CPU time of capture of the reference frame (nReference).
+            </summary>
+        </member>
+        <!-- El comentario XML con formato incorrecto se omite para el miembro "F:Snippets.KMLReader.maxKeyLength" -->
+        <!-- El comentario XML con formato incorrecto se omite para el miembro "F:Snippets.KMLReader.maxStringDataLength" -->
+        <!-- El comentario XML con formato incorrecto se omite para el miembro "F:Snippets.KMLReader.lastLength" -->
+        <member name="M:Snippets.KMLReader.#ctor">
+            \brief Constructor KML
+        </member>
+        <member name="M:Snippets.KMLReader.readString">
+            Llegeix un string de l'stream KML
+        </member>
+        <member name="M:Snippets.KMLReader.readString(System.Int32)">
+            Llegeix un string de l'stream KML d'una mida predeterminada
+        </member>
+        <member name="M:Snippets.KMLReader.skip">
+            \brief Es salta les ultimes dades llegides
+        </member>
+        <member name="M:Snippets.KMLReader.skip(System.Int32)">
+            \brief Es salta una quantitat de dades. Si es -1, es salta la ultima quantitat de dades. Si la ultima quantiat de dades es indeterminada, es salta un string
+        </member>
+        <member name="M:Snippets.KMLReader.readSerializedProperty(System.Type)">
+            \brief Llegeix un objecte serialitzat. Pot llençar excepcions de tota mena.
+        </member>
+        <member name="M:Snippets.KMLReader.getTabLevel">
+            \brief 
+        </member>
+        <member name="M:Snippets.KMLWriter.#ctor">
+            <summary>
+            Constructor KML
+            </summary>
+        </member>
+        <member name="M:Snippets.KMLWriter.ToArray">
+            \brief Si estem escrivint en un MemoryStream, retorna un array de dades amb tot el que hem escrit
+        </member>
+        <member name="M:Snippets.KMLWriter.writeProperty(System.String)">
+            <summary>
+            Escriu una propietat buida a un objecte KML
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snippets.KMLWriter.writeProperty(System.String,System.Int32)">
+            <summary>
+            Escriu una propietat amb un enter a un objecte KML
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snippets.KMLWriter.writeProperty(System.String,System.Single)">
+            <summary>
+            Escriu una propietat amb un enter a un objecte KML
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snippets.KMLWriter.writeProperty(System.String,System.String)">
+            <summary>
+            Escriu una propietat amb valor a un objecte KML
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Snippets.KMLWriter.writeBinaryProperty(System.String,System.String)">
+            \brief Escriu un string a KML com a dades binaries. Normalment es fa servir per strings que poden contenir \n
+        </member>
+        <member name="M:Snippets.KMLWriter.writeBinaryProperty(System.String,System.Byte[])">
+            <summary>
+            Escriu dades binaries a un objecte KML
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Snippets.cpp">
+            Classe superlamer made in Kak, per fer servir funcions C facilment
+        </member>
+        <member name="M:Snippets.cpp.atof(System.String)">
+            \brief Converteix un string a flotant
+        </member>
+        <member name="M:Snippets.cpp.atoi(System.String,System.Int32)">
+            \brief Converteix un string a enter
+        </member>
+        <member name="M:Snippets.cpp.randBetween(System.Int32,System.Int32)">
+            \brief Retorna un enter en l'interval [v1,v2)
+        </member>
+        <member name="M:Snippets.cpp.fRand">
+            \brief Retorna un flotant en l'interval [0.0,1.0)
+            NextDouble retorna en aquest interval (està comprovat!)
+        </member>
+        <member name="M:Snippets.cpp.htons(System.UInt16)">
+            \brief Converteix un u16 carregat d'un fitxer generat en PC en un u16, sigui la plataforma que sigui
+        </member>
+        <member name="M:Snippets.cpp.htonl(System.Int32)">
+            \brief Converteix un int carregat d'un fitxer generat en PC en un int, sigui la plataforma que sigui
+        </member>
+        <member name="M:Snippets.cpp.removeExtension(System.String)">
+            \brief Donat un nom de fitxer, retorna el nom de fitxer sense extensio
+        </member>
+        <member name="M:Snippets.cpp.writeFile(System.String,System.String)">
+            \brief Funcio rapida per gravar coses a disc
+        </member>
+    </members>
+</doc>
